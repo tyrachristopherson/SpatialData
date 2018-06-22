@@ -38,6 +38,9 @@ library(RgoogleMaps)
 ################################################################
 
 ui <- fluidPage(
+  
+  tags$br(),
+  
     ################################################################
     # Header section: information & selection inputs
     ################################################################
@@ -84,7 +87,7 @@ ui <- fluidPage(
       tags$br(),
       
       # Table of the policies with highest/lowest coverage for selected state and policy form
-      dataTableOutput(outputId = "TopCoverage")),
+      dataTableOutput(outputId = "AddressTable")),
     
     # Modal (the pop-up with satellite imagery)
     bsModal(id = ("satelliteModal"),
@@ -107,9 +110,24 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   
-  myTable <- data.frame(PropertyLatitude = c(42.356217),
-                        PropertyLongitude = c(-71.056761),
-                        Address = c('1 Federal St, Boston, MA'))
+  myTable <- data.frame(Latitude = c(42.356217, 42.328772, 42.331530, 47.512644, 47.784908, 37.792189,
+                                     37.994282, 47.139833, 47.198255, 47.158317, 42.228597, 46.935464,
+                                     39.755293, 47.479435),
+                        Longitude = c(-71.056761, -71.101435, -71.097971, -122.145686, -118.415404, -122.152301,
+                                      -121.734614, -122.444385, -122.000416, -122.568270, -71.149317, -121.474654,
+                                      -105.223371, -122.117368),
+                        Address = c('1 Federal St', '240 Parker Hill Ave', '1 Sewall Street',
+                                    '5502 NE 24th Ct', '123 Welsh Creek Rd', '12911 Brookpark Rd',
+                                    '4758 Lucchesi Ct', '809 Tule Lake Rd', '2411 Paramount Dr',
+                                    '10910 98th Ave Ct SW', '95 Hillsdale Rd', '33914 Crystal Mountain Blvd',
+                                    '907 11th St', '16655 SE 136th St'),
+                        City = c('Boston', 'Boston', 'Boston', 'Renton', 'Creston', 'Oakland', 'Oakley',
+                                 'Tacoma', 'Enumclaw', 'Lakewood', 'Dedham', 'Enumclaw', 'Golden', 'Renton'),
+                        State = c('Massachusetts', 'Massachusetts', 'Massachusetts', 'Washington',
+                                  'Washington', 'California', 'California', 'Washington', 'Washington',
+                                  'Washington', 'Massachusetts', 'Washington', 'Colorado', 'Washington'),
+                        Zipcode = c(02110, 02120, 02120, 98059, 12345, 94619, 94561, 98444, 98022, 98498,
+                                    02026, 98022, 80401, 98059))
   
   
   ################################################################
@@ -121,8 +139,8 @@ server <- function(input, output, session) {
   #render Plot of satellite imagery
   output$satelliteImage <- renderPlot({
     PlotOnStaticMap(GetBingMap(
-      center = c(myTable[input$TopCoverage_rows_selected, "PropertyLatitude"],
-              myTable[input$TopCoverage_rows_selected, "PropertyLongtitude"]),
+      center = c(myTable[input$AddressTable_rows_selected, 'Latitude'],
+              myTable[input$AddressTable_rows_selected, 'Longitude']),
       zoom = 19, maptype = "AerialWithLabels", apiKey = bingkey))
   }) # end renderPlot
   
@@ -131,15 +149,15 @@ server <- function(input, output, session) {
   # Data table
   ################################################################
   
-  #Renders datatable of top/bottom coverages for the selected inputs & changes with data selection
-  output$TopCoverage <- renderDataTable({
+  #Renders datatable of addresses
+  output$AddressTable <- renderDataTable({
       
       
       datatable(myTable,
                       options = list(dom = "lt",
                                      ordering = FALSE,
                                      columnDefs = list(list(className = 'dt-right')),
-                                     lengthMenu = c(10, 25, 50)),
+                                     lengthMenu = c(5, 10, 15)),
                       selection = 'single',
                       rownames = TRUE,
                       class = 'row-border hover') %>%
