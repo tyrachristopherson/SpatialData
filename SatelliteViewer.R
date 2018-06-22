@@ -88,20 +88,22 @@ server <- function(input, output, session) {
                                     '5502 NE 24th Ct', '123 Welsh Creek Rd', '12911 Brookpark Rd',
                                     '4758 Lucchesi Ct', '809 Tule Lake Rd', '2411 Paramount Dr',
                                     '10910 98th Ave Ct SW', '95 Hillsdale Rd', '33914 Crystal Mountain Blvd',
-                                    '907 11th St', '16655 SE 136th St'),
+                                    '907 11th St', '16655 SE 136th St', '3240 35th Ave S'),
                         City = c('Boston', 'Boston', 'Boston', 'Renton', 'Creston', 'Oakland', 'Oakley',
-                                 'Tacoma', 'Enumclaw', 'Lakewood', 'Dedham', 'Enumclaw', 'Golden', 'Renton'),
+                                 'Tacoma', 'Enumclaw', 'Lakewood', 'Dedham', 'Enumclaw', 'Golden', 'Renton',
+                                 'Seattle'),
                         State = c('Massachusetts', 'Massachusetts', 'Massachusetts', 'Washington',
                                   'Washington', 'California', 'California', 'Washington', 'Washington',
-                                  'Washington', 'Massachusetts', 'Washington', 'Colorado', 'Washington'),
+                                  'Washington', 'Massachusetts', 'Washington', 'Colorado', 'Washington',
+                                  'Washington'),
                         Zipcode = c(02110, 02120, 02120, 98059, 12345, 94619, 94561, 98444, 98022, 98498,
-                                    02026, 98022, 80401, 98059),
+                                    02026, 98022, 80401, 98059, 98144),
                         Latitude = c(42.356217, 42.328772, 42.331530, 47.512644, 47.784908, 37.792189,
                                      37.994282, 47.139833, 47.198255, 47.158317, 42.228597, 46.935464,
-                                     39.755293, 47.479435),
+                                     39.755293, 47.479435, 47.574024),
                         Longitude = c(-71.056761, -71.101435, -71.097971, -122.145686, -118.415404, -122.152301,
                                       -121.734614, -122.444385, -122.000416, -122.568270, -71.149317, -121.474654,
-                                      -105.223371, -122.117368))
+                                      -105.223371, -122.117368, -122.288568))
   
   # Satellite Imagery
   ####################
